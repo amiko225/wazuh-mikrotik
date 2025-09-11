@@ -1,0 +1,73 @@
+<!-- LOGOWANIE -->
+
+<decoder name="user_login">
+  <prematch>user (\S+) logged (\S+) from (\S+) via (\S+)</prematch>
+  <regex type="pcre2">(\S+): user (\S+) logged (\S+) from (\S+) via (\S+)</regex>
+  <order>mikrotik_id, username, action, srcip, access_method</order>
+</decoder>
+
+<decoder name="user_login_failure">
+  <prematch>login failure for user (\S+) from (\S+) via (\S+)</prematch>
+  <regex type="pcre2">(\S+): login failure for user (\S+) from (\S+) via (\S+)</regex>
+  <order>mikrotik_id, username, srcip, access_method</order>
+</decoder>
+
+<decoder name="user_change">
+  <prematch type="pcre2">user (\S+) (added|password changed|removed) by</prematch>
+  <regex type="pcre2">(\S+): user (\S+) (added|password changed|removed) by .*:(\S+)@(\S+) \((.*)\)</regex>
+  <order>mikrotik_id, action, newuser, username, srcip, rule_details</order>
+</decoder>
+
+<!-- ZDALNE POŁĄCZENIE -->
+
+<decoder name="wireguard">
+  <prematch>wireguard user (\S+) logged (\S+) from (\S+)</prematch>
+  <regex type="pcre2">(\S+): wireguard user (\S+) logged (\S+) from (\S+)</regex>
+  <order>mikrotik_id, username, action, srcip</order>
+</decoder>
+
+<decoder name="ovpn">
+  <prematch>(\S+) logged (\S+), (\S+) from (\S+)</prematch>
+  <regex type="pcre2">(\S+): (\S+) logged (\S+), (\S+) from (\S+)</regex>
+  <order>mikrotik_id, username, action, localip, srcip</order>
+</decoder>
+
+<!-- ZMIANY REGUŁ -->
+
+<decoder name="filter_rule_change">
+  <prematch type="pcre2">filter rule (changed|removed|added) by</prematch>
+  <regex type="pcre2">(\S+): filter rule (changed|removed|added) by .*:(\S+)@(\S+) \((.*)\)</regex>
+  <order>mikrotik_id, action, username, srcip, rule_details</order>
+</decoder>
+
+<decoder name="raw_rule_change">
+  <prematch type="pcre2">raw rule (changed|removed|added) by</prematch>
+  <regex type="pcre2">(\S+): raw rule (changed|removed|added) by .*:(\S+)@(\S+) \((.*)\)</regex>
+  <order>mikrotik_id, action, username, srcip, rule_details</order>
+</decoder>
+
+<decoder name="nat_rule_change">
+  <prematch type="pcre2">nat rule (changed|removed|added) by</prematch>
+  <regex type="pcre2">(\S+): nat rule (changed|removed|added) by .*:(\S+)@(\S+) \((.*)\)</regex>
+  <order>mikrotik_id, action, username, srcip, rule_details</order>
+</decoder>
+
+<decoder name="forward_rule_change">
+  <prematch type="pcre2">forward rule (changed|removed|added) by</prematch>
+  <regex type="pcre2">(\S+): forward rule (changed|removed|added) by .*:(\S+)@(\S+) \((.*)\)</regex>
+  <order>mikrotik_id, action, username, srcip, rule_details</order>
+</decoder>
+
+<decoder name="mangle_rule_change">
+  <prematch type="pcre2">mangle rule (changed|removed|added) by</prematch>
+  <regex type="pcre2">(\S+): mangle rule (changed|removed|added) by .*:(\S+)@(\S+) \((.*)\)</regex>
+  <order>mikrotik_id, action, username, srcip, rule_details</order>
+</decoder>
+
+<!-- RESZTA -->
+
+<decoder name="mikrotik_log">
+  <prematch type="pcre2">(\S+) (\S+) (\S+) by</prematch>
+  <regex type="pcre2">(\S+): (\S+) (\S+) (\S+) by .*:(\S+)@(\S+) \((.*)\)</regex>
+  <order>mikrotik_id, type, target, action, username, srcip, rule_details</order>
+</decoder>

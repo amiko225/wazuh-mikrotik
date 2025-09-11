@@ -1,0 +1,15 @@
+<group name="ids,suricata,">
+
+  <rule id="86620" level="0">
+    <if_sid>86601</if_sid>
+    <field type="pcre2" name="alert.signature_id">^(2000001|2000002|2000003)$</field>
+    <description>Ignorowanie alertów uczących Suricaty</description>
+  </rule>
+
+    <rule id="86610" level="10">
+      <if_sid>86601</if_sid>
+      <description>Suricata $(alert.signature)  Unauthorized Traffic $(proto) $(src_ip):$(src_port) -> $(dest_ip):$(dest_port)</description>
+      <options>no_full_log</options>
+    </rule>
+    
+</group>

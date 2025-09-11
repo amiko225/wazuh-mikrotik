@@ -1,0 +1,13 @@
+[Unit]
+Description=Monitor logów MikroTik i backup firewall do GitHub
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/mikrotik-firewall/mikrotik-log-monitor.sh
+Restart=always
+User=wazuhadmin
+WorkingDirectory=/opt/mikrotik-firewall/
+
+[Install]
+WantedBy=multi-user.target
